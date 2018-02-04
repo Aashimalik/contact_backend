@@ -26,6 +26,5 @@ adminRoutes.routes.forEach(x => matchRoute(admin, x));
 
 
 module.exports = {
-    router: router,
     admin: admin
 };

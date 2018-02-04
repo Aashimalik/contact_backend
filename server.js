@@ -11,6 +11,7 @@ const cors = require('cors');
 const contactRoutes = require('./router/contactRoutes');
 const routes 		= require(path.resolve('./config/router'));
 const database	= require(path.resolve('./config/database'));
+const expressJWT 	= require('express-jwt');
 // const dotenv =require('dotenv');
 
 
@@ -21,6 +22,14 @@ app.use(bodyParser.urlencoded({extended:true}));
 
 app.use(bodyParser.json());
 
+ router.use(expressJWT({
+        secret: database.secret
+    }).unless({
+        path:[
+            '/user/login',
+            '/user/sign',
+        ]
+    }));
 var corsOptionsDelegate = function (req, callback) {
   var corsOptions;
   if (whitelist.indexOf(req.header('Origin')) !== -1) {
@@ -59,7 +68,7 @@ var corsOptionsDelegate = function (req, callback) {
 
 
 app.use('/adminapi',routes.admin)
-app.use('/',contactRoutes)
+// app.use('/',contactRoutes)
 
 http.listen(PORT, function(err){
     if(err){
