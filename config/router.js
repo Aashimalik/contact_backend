@@ -10,19 +10,19 @@ const
     admin 		= express.Router();
     const expressJWT 	= require('express-jwt');
     
-    // router.use(expressJWT({
-    //     secret: database.secret
-    // }).unless({
-    //     path:[
-    //         '/posts/paginate',
-    //         '/users/login',
-    //         'adminapi/user/sign',
-    //         '/favicon.ico'
-    //     ]
-    // }));
+   
+
+admin.use(expressJWT({
+	secret: new Buffer(database.secret).toString('base64'),
+}).unless({
+	path:[
+		'/adminapi/user/login',
+		'/adminapi/user/sign',
+        
+	]
+}));
 
 adminRoutes.routes.forEach(x => matchRoute(admin, x));
-
 
 
 module.exports = {
